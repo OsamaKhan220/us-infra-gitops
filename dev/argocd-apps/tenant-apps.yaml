@@ -1,0 +1,21 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: tenant-apps
+  namespace: argocd
+spec:
+  destination:
+    namespace: '*'
+    server: https://kubernetes.default.svc
+  project: default
+  source:
+    directory:
+      jsonnet: {}
+      recurse: true
+    path: 'user-services/argocd-apps/dev'
+    repoURL:  https://github.com/OsamaKhan220/us-apps-gitops
+    targetRevision: main
+  syncPolicy:
+    automated:
+      prune: false
+      selfHeal: true
